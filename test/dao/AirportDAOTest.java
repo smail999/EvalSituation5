@@ -7,7 +7,6 @@ package dao;
 
 import model.Airport;
 import java.util.ArrayList;
-import java.util.Iterator;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,6 +17,8 @@ import static org.junit.Assert.*;
 /**
  *
  * @author Salim El Moussaoui <salim.elmoussaoui.afpa2017@gmail.com>
+ * @author Cedric DELHOME
+ * @author Laure-Helene Soyeux
  */
 public class AirportDAOTest {
 
@@ -114,9 +115,11 @@ public class AirportDAOTest {
             // Insert airport in table
             Airport resultAirport = airportDAO.create(airportInsert);  
             // find airport
-            findAirport = airportDAO.find(resultAirport.getAita()); 
+            findAirport = airportDAO.find(resultAirport.getAita());
+            System.out.println("aaa " + findAirport);
             // delete airport
             boolean result = airportDAO.delete(findAirport.getAita());
+                        System.out.println("aaa " + result);
             boolean expResult = true;
             assertEquals(expResult, result);
         }

@@ -8,12 +8,18 @@ package model;
 /**
  *
  * @author Salim El Moussaoui <salim.elmoussaoui.afpa2017@gmail.com>
+ * @author Cedric DELHOME
+ * @author Laure-Helene Soyeux
  */
 public class RoleRight {
     private long user_id;
     private boolean admin;
     private boolean blocked;
-
+    public RoleRight() {
+        this.user_id = 0;
+        this.admin = false;
+        this.blocked = false;
+    }
     public RoleRight(long user_id, boolean admin, boolean blocked) {
         this.user_id = user_id;
         this.admin = admin;
@@ -46,7 +52,7 @@ public class RoleRight {
 
     @Override
     public String toString() {
-        return "RoleRight{" + "user_id=" + user_id + ", admin=" + admin + ", blocked=" + blocked + '}';
+        return "RolesRights{" + "user_id=" + user_id + ", admin=" + admin + ", blocked=" + blocked + '}';
     }
 
     @Override

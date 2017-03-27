@@ -13,6 +13,8 @@ import static org.junit.Assert.*;
 /**
  *
  * @author Salim El Moussaoui <salim.elmoussaoui.afpa2017@gmail.com>
+ * @author Cedric DELHOME
+ * @author Laure-Helene Soyeux
  */
 public class FunctionDAOTest {
 

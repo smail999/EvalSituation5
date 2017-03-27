@@ -5,7 +5,7 @@
  */
 package dao;
 
-import model.RolesRights;
+import model.RoleRight;
 import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
  * @author Cedric DELHOME
  * @author Laure-Helene Soyeux
  */
-public class RolesRightsDAOTest {
+public class RoleRightDAOTest {
 
     /**
      * Test of create method, of class RoleRightDAO.
@@ -25,15 +25,15 @@ public class RolesRightsDAOTest {
     public void testCreate() {
         System.out.println("create");
         // create object roles_rights    
-        RolesRights roles_rights = new RolesRights(7,true,false);
-        RolesRightsDAO roles_rightsDAO = new RolesRightsDAO();
+        RoleRight roles_rights = new RoleRight(7,true,false);
+        RoleRightDAO roles_rightsDAO = new RoleRightDAO();
         // find roles_rights  create 
-        RolesRights expResult = roles_rightsDAO.find(roles_rights.getUser_id());
+        RoleRight expResult = roles_rightsDAO.find(roles_rights.getUser_id());
 
         // if find use_id is 0
         if (!roles_rightsDAO.isValid(expResult)) {           
             // insert roles_rights in table
-            RolesRights result = roles_rightsDAO.create(roles_rights);
+            RoleRight result = roles_rightsDAO.create(roles_rights);
             // find roles_rights
             expResult = roles_rightsDAO.find(roles_rights.getUser_id());   
             // delete roles_rights test
@@ -51,15 +51,15 @@ public class RolesRightsDAOTest {
     public void testUpdate() {
         System.out.println("update");
         // create object roles_rights      
-        RolesRights roles_rightsInsert = new RolesRights(6,false,false);
+        RoleRight roles_rightsInsert = new RoleRight(6,false,false);
         // instatied roles_rightsDAO
-        RolesRightsDAO roles_rightsDAO = new RolesRightsDAO();
+        RoleRightDAO roles_rightsDAO = new RoleRightDAO();
         // find roles_rights create 
-        RolesRights findRoleRight = roles_rightsDAO.find(roles_rightsInsert.getUser_id());
+        RoleRight findRoleRight = roles_rightsDAO.find(roles_rightsInsert.getUser_id());
         // if find roles_rights is empty
         if (!roles_rightsDAO.isValid(findRoleRight)) {
             // Insert roles_rights in table
-            RolesRights resultRoleRight = roles_rightsDAO.create(roles_rightsInsert);             
+            RoleRight resultRoleRight = roles_rightsDAO.create(roles_rightsInsert);             
             // find roles_rights
             findRoleRight = roles_rightsDAO.find(resultRoleRight.getUser_id());
         }
@@ -80,17 +80,17 @@ public class RolesRightsDAOTest {
     @Test
     public void testDelete() {
         System.out.println("delete");
-        RolesRightsDAO roles_rightsDAO = new RolesRightsDAO();
+        RoleRightDAO roles_rightsDAO = new RoleRightDAO();
 
         // create object roles_rights	
-        RolesRights roles_rightsInsert =  new RolesRights(9, true,false);
+        RoleRight roles_rightsInsert =  new RoleRight(9, true,false);
         // find roles_rights  create 
-        RolesRights findRoleRight = roles_rightsDAO.find(roles_rightsInsert.getUser_id());
+        RoleRight findRoleRight = roles_rightsDAO.find(roles_rightsInsert.getUser_id());
 
         // if find roles_rights is empty
         if (!roles_rightsDAO.isValid(findRoleRight)) {
             // Insert roles_rights in table
-            RolesRights resultRoleRight = roles_rightsDAO.create(roles_rightsInsert);
+            RoleRight resultRoleRight = roles_rightsDAO.create(roles_rightsInsert);
             // find roles_rights
             findRoleRight = roles_rightsDAO.find(resultRoleRight.getUser_id());
             // delete roles_rights
@@ -106,8 +106,8 @@ public class RolesRightsDAOTest {
     @Test
     public void testGetdAll() {
         System.out.println("findAll");
-        RolesRightsDAO roles_rightsDAO = new RolesRightsDAO();
-        ArrayList<RolesRights> arrayRoleRight = roles_rightsDAO.getAll();
+        RoleRightDAO roles_rightsDAO = new RoleRightDAO();
+        ArrayList<RoleRight> arrayRoleRight = roles_rightsDAO.getAll();
         String expResult = "";
         String result = "";
         for (int i = 0; i < arrayRoleRight.size(); i++) {
@@ -124,7 +124,7 @@ public class RolesRightsDAOTest {
     @Test
     public void testFind() {
         System.out.println("find");
-        RolesRightsDAO roles_rightsDAO = new RolesRightsDAO();
+        RoleRightDAO roles_rightsDAO = new RoleRightDAO();
         // assign primary key
         long primary_key = 96;
         // assign result exemple

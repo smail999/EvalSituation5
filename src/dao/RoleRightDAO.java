@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
-import model.RolesRights;
+import model.RoleRight;
 
 /**
  *
@@ -19,9 +19,9 @@ import model.RolesRights;
  * @author Cedric DELHOME
  * @author Laure-Helene Soyeux
  */
-public class RolesRightsDAO extends DAO<RolesRights, Long> {
+public class RoleRightDAO extends DAO<RoleRight, Long> {
 
-    public RolesRightsDAO() {
+    public RoleRightDAO() {
         super();
     }
 
@@ -33,9 +33,9 @@ public class RolesRightsDAO extends DAO<RolesRights, Long> {
      * @return role_right object
      */
     @Override
-    public RolesRights create(RolesRights role_right) {
+    public RoleRight create(RoleRight role_right) {
 
-        RolesRights role_rightCreate = new RolesRights();
+        RoleRight role_rightCreate = new RoleRight();
         if (this.bddmanager.connect()) {
             try {
 
@@ -81,7 +81,7 @@ public class RolesRightsDAO extends DAO<RolesRights, Long> {
      * @return true is update role_right, false isn't update
      */
     @Override
-    public boolean update(RolesRights role_right) {
+    public boolean update(RoleRight role_right) {
         boolean success = false;
 
         if (this.bddmanager.connect()) {
@@ -164,7 +164,7 @@ public class RolesRightsDAO extends DAO<RolesRights, Long> {
     @Override
     public ArrayList getAll() {
         // create array list role_right empty
-        ArrayList<RolesRights> listRoleRight = new ArrayList<>();
+        ArrayList<RoleRight> listRoleRight = new ArrayList<>();
         if (this.bddmanager.connect()) {
 
             try {
@@ -179,7 +179,7 @@ public class RolesRightsDAO extends DAO<RolesRights, Long> {
                 // insert all rorl in array object role_right
 
                 while (rs.next()) {
-                    RolesRights el = new RolesRights(
+                    RoleRight el = new RoleRight(
                             rs.getLong("user_id"),
                             rs.getBoolean("admin"),
                             rs.getBoolean("blocked")
@@ -207,9 +207,9 @@ public class RolesRightsDAO extends DAO<RolesRights, Long> {
      * @return role_right
      */
     @Override
-    public RolesRights find(Long primary_key) {
+    public RoleRight find(Long primary_key) {
         // create array role_right empty
-        RolesRights role_right = new RolesRights();
+        RoleRight role_right = new RoleRight();
         //check if connect db
         if (this.bddmanager.connect()) {
 
@@ -247,7 +247,7 @@ public class RolesRightsDAO extends DAO<RolesRights, Long> {
      * @param role_right
      * @return false is empty and true is full
      */
-    public boolean isValid(RolesRights role_right) {
+    public boolean isValid(RoleRight role_right) {
         boolean isValid = true;
 
         // if id is empty
