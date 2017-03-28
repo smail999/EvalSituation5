@@ -5,29 +5,38 @@
  */
 package controller;
 
-import dao.AccessBackofficeDAO;
+
+import dao.FunctionDAO;
 import dao.UserDAO;
 import java.util.ArrayList;
-import javax.swing.JButton;
+
+import javax.swing.JComboBox;
 import javax.swing.JTable;
-import javax.swing.JTextField;
+
 import javax.swing.table.DefaultTableModel;
 import model.AccessBackoffice;
-import model.User;
 
-/**
- *
- * @author Formation
- */
+import model.Function;
+import model.User;
+import view.UseurView;
+
+
 public class ControllerUser {
-  
-    private UserDAO UserDAO = new UserDAO();
+
+    
+    private UserDAO userDAO ;
+
+    public ControllerUser(UserDAO userDao) {
+        this.userDAO=userDao;
+    }
+    
+   
 
     public JTable addRowTable(JTable jt_listUser) {
+        
         DefaultTableModel model = (DefaultTableModel) jt_listUser.getModel();
-        ArrayList<User> list_User = UserDAO.getAll();
-
-        Object rowData[] = new Object[9];
+        ArrayList<User> list_User = userDAO.getAllDetails();
+        Object rowData[] = new Object[13];
 
         for (User user : list_User) {
 
@@ -40,73 +49,62 @@ public class ControllerUser {
             rowData[6] = user.getTel();
             rowData[7] = user.getMail();
             rowData[8] = user.getFunction();
-           
+            rowData[9] = user.getNickname_back();
+            rowData[10] = user.isIsBlocked();
+            rowData[11] = user.isIsAdmin();           
+            rowData[12] = user.getNickname_site();
+     
+
             model.addRow(rowData);
         }
         return jt_listUser;
     }
-
-    public void updateInfo(JTextField tf_firstname,
-                           JTextField tf_lastname,
-                           JTextField tf_address,
-                           JTextField tf_city,
-                           JTextField tf_country,
-                           JTextField tf_tel ,
-                           JTextField tf_mail , 
-                           JTextField tf_function) 
-    {
-        
-       User uservide = new User();
-      
-       uservide.setFirstname(tf_firstname.getText());
-       uservide.setFirstname(tf_lastname.getText());
-       uservide.setFirstname(tf_address.getText());
-       uservide.setFirstname(tf_city.getText());
-       uservide.setFirstname(tf_country.getText());
-       uservide.setFirstname(tf_tel.getText());
-       uservide.setFirstname(tf_mail.getText());
-       uservide.setFirstname(tf_function.getText());
-      
-       UserDAO userdao = new UserDAO();
-       userdao.update(uservide);
+     public void UserInfo(UseurView userView, Long id) {
+        User user = this.userDAO.find(id);
+    
+        ArrayList<String> values = new ArrayList<>();
+        ArrayList<Boolean> valuesBollean = new ArrayList<>();
        
-
-    } 
-
-    public void addInfoPlanned(JTextField tf_Prénom,
-                           JTextField tf_nom,
-                           JTextField tf_address,
-                           JTextField tf_city,
-                           JTextField tf_country,
-                           JTextField tf_tel ,
-                           JTextField tf_mail , 
-                           JTextField tf_function) {
         
-      Object numObject = jt_listUser.getValueAt(jt_listUser.getSelectedRow(), 0);
-        Long id = Long.parseLong(numObject.toString().substring(2));
+        // Add all values in ArraList
         
-        Flight flight = this.flightDAO.find(id);
-//        System.out.println(flight);
+        values.add(String.valueOf(user.getFirstname()));
+        values.add(String.valueOf(user.getLastname()));
+        values.add(String.valueOf(user.getAddress()));
+        values.add(String.valueOf(user.getCity()));
+        values.add(String.valueOf(user.getCountry()));
+        values.add(String.valueOf(user.getTel()));
+        values.add(String.valueOf(user.getMail()));
+        values.add(String.valueOf(user.getFunction()));
+        values.add(String.valueOf(user.getNickname_back()));
         
-        num.setText("DF" + flight.getId());
-//        num.setText("");
-        countryStart.setText(flight.getDeparting_country());
-        iataStart.setText(flight.getDeparting_aita());
-//        num.setText("");
-        countryArrived.setText(flight.getArrival_country());
-        iataArrived.setText(flight.getArrival_aita());
-        dateStart.setText(flight.getDeparting_hour().substring(0, 10));
-        hoursStart.setText(flight.getDeparting_hour().substring(11, 16));
-        dateArrived.setText(arrivedDate(flight).substring(0, 10));
-        hoursArrived.setText(arrivedDate(flight).substring(11, 16));
-        time.setText("" + flight.getDuration());
-        price.setText("" + flight.getPrice());
-        idPilote.setSelectedIndex(1);   
+        values.add(String.valueOf(user.getNickname_site()));
+        valuesBollean.add(user.isIsBlocked());
+        valuesBollean.add(user.isIsAdmin());
+        
+        userView.updateUserInfo(values,valuesBollean);
+         
+        
     }
-     
     
-    
-    
-    
-    
+   public void delete(Long id){
+        User user = this.userDAO.find(id);
+        userDAO.delete(user.getId());
+    }
+   public void addCombobox(JComboBox cb_Metier) {
+
+        // ************************ ADD Function
+        FunctionDAO functionDAO = new FunctionDAO();
+        ArrayList<Function> metier = new ArrayList<>();
+
+        metier = functionDAO.getAll();
+
+        cb_Metier.addItem("");
+
+        for (int i = 0; i < metier.size(); i++) {
+            cb_Metier.addItem(metier.get(i).getDefinition());
+
+        }
+
+    }
 }

@@ -224,7 +224,74 @@ public class UserDAO extends DAO<User, Long> {
                             rs.getString("country"),
                             rs.getString("tel"),
                             rs.getString("mail"),
-                            rs.getInt("function")
+                            rs.getInt("function"),
+                            false, 
+                            false,
+                            "",
+                            ""
+                    );
+                    listUser.add(el);
+
+                }
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                return listUser;
+            }
+
+        } else {
+            return listUser;
+        }
+
+        return listUser;
+    }
+     public ArrayList getAllDetails() {
+        // create array list user empty
+        ArrayList<User> listUser = new ArrayList<>();
+        if (this.bddmanager.connect()) {
+
+            try {
+                // create statement 
+                Statement st = this.bddmanager
+                        .getConnectionManager()
+                        .createStatement();
+                // create requete 
+                String requete = "SELECT \n" +
+                                "user.id, \n" +
+                                "user.firstname, \n" +
+                                "user.lastname, \n" +
+                                "user.address, \n" +
+                                "user.city, \n" +
+                                "user.country, \n" +
+                                "user.tel, \n" +
+                                "user.mail, \n" +
+                                "user.function,\n" +
+                                "back.nickname as nickname_back,\n" +
+                                "back.isBlocked as isBlocked,\n" +
+                                "back.isAdmin as isAdmin,\n" +
+                                "site.nickname as nickname_site\n" +
+                                "FROM users as user\n" +
+                                "LEFT JOIN access_backoffice as back ON back.user_id = user.id \n" +
+                                "LEFT JOIN access_site as site ON site.user_id = user.id";
+                // excute requete
+                ResultSet rs = st.executeQuery(requete);
+                // insert all users in array object user
+
+                while (rs.next()) {
+                    User el = new User(
+                            rs.getLong("id"),
+                            rs.getString("firstname"),
+                            rs.getString("lastname"),
+                            rs.getString("address"),
+                            rs.getString("city"),
+                            rs.getString("country"),
+                            rs.getString("tel"),
+                            rs.getString("mail"),
+                            rs.getInt("function"),
+                            rs.getBoolean("isBlocked"),
+                            rs.getBoolean("isAdmin"),
+                            rs.getString("nickname_back"),
+                            rs.getString("nickname_site")
                     );
                     listUser.add(el);
 
@@ -260,7 +327,23 @@ public class UserDAO extends DAO<User, Long> {
                 Statement st = this.bddmanager.getConnectionManager()
                         .createStatement();
                 // create requete add primary key
-                String requete = "SELECT * FROM users WHERE id = " + primary_key;
+                String requete = "SELECT \n" +
+"                                user.id,\n" +
+"                                user.firstname, \n" +
+"                                user.lastname, \n" +
+"                                user.address, \n" +
+"                                user.city, \n" +
+"                                user.country, \n" +
+"                                user.tel, \n" +
+"                                user.mail, \n" +
+"                                user.function,\n" +
+"                                back.nickname as nickname_back,\n" +
+"                                back.isBlocked as isBlocked,\n" +
+"                                back.isAdmin as isAdmin,\n" +
+"                                site.nickname as nickname_site\n" +
+"                                FROM users as user\n" +
+"                                LEFT JOIN access_backoffice as back ON back.user_id = user.id \n" +
+"                                LEFT JOIN access_site as site ON site.user_id = user.id WHERE user.id = " + primary_key;
                 // excute requete
                 ResultSet rs = st.executeQuery(requete);
                 // if result is full
@@ -276,6 +359,11 @@ public class UserDAO extends DAO<User, Long> {
                     user.setTel(rs.getString("tel"));
                     user.setMail(rs.getString("mail"));
                     user.setFunction(rs.getInt("function"));
+                    user.setNickname_back(rs.getString("nickname_back"));
+                    user.setIsBlocked(rs.getBoolean("isBlocked"));
+                    user.setIsAdmin(rs.getBoolean("isAdmin"));
+                    user.setNickname_site(rs.getString("nickname_site"));
+                    
                 }
 
             } catch (SQLException ex) {
